@@ -13,11 +13,15 @@ import {
 } from './config/config.constants';
 import { AuthModule } from './app/auth/auth.module';
 import { MapperModule } from './common/mapper/mapper.module';
+import { UsuarioModule } from './app/usuario/usuario.module';
+import { RolModule } from './app/rol/rol.module';
 
 @Module({
   imports: [
     AuthModule,
     MapperModule,
+    UsuarioModule,
+    RolModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,

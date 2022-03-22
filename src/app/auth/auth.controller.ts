@@ -20,6 +20,9 @@ import { Get } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Response } from 'express';
+import { Roles } from './decorators/rol.decorator';
+import { RolEnum } from '../../data/enums/rol.enum';
+import { RoleGuard } from './guards/role.guard';
 
 @ApiTags('Auth')
 @Controller(`${API_BASE_URL}/auth`)
@@ -33,6 +36,9 @@ export class AuthController {
     return loginResponse;
   }
 
+  @ApiBearerAuth()
+  @Roles(RolEnum.ADMIN)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Post('new-user')
   public async newUser(@Body() userDTO: UsuarioCreateDTO) {
     try {
@@ -66,7 +72,7 @@ export class AuthController {
       }
       return res.status(HttpStatus.BAD_REQUEST).json({
         ok: false,
-        message: 'El usuario no existe, está inactivo o el los datos están mal',
+        message: 'El usuario no existe, está inactivo o los datos están mal',
       });
     } catch (error) {
       throw new HttpException(

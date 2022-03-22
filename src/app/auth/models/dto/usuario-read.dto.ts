@@ -36,3 +36,8 @@ export class UsuarioReadDTO {
   @Type(() => RolUsuarioReadDTO)
   rol: RolUsuarioReadDTO;
 }
+
+export class FullUsuarioReadDTO extends UsuarioReadDTO {
+  @Expose()
+  contrasena: string;
+}

@@ -15,6 +15,7 @@ import { AuthModule } from './app/auth/auth.module';
 import { MapperModule } from './common/mapper/mapper.module';
 import { UsuarioModule } from './app/usuario/usuario.module';
 import { RolModule } from './app/rol/rol.module';
+import { MarcaModule } from './app/marca/marca.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { RolModule } from './app/rol/rol.module';
     MapperModule,
     UsuarioModule,
     RolModule,
+    MarcaModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,

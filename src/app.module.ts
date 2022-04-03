@@ -18,6 +18,8 @@ import { RolModule } from './app/rol/rol.module';
 import { MarcaModule } from './app/marca/marca.module';
 import { UnidadMedidaModule } from './app/unidad-medida/unidad-medida.module';
 import { UbicacionModule } from './app/ubicacion/ubicacion.module';
+import { TipoEnvaseModule } from './app/tipo-envase/tipo-envase.module';
+import { TipoMaterialModule } from './app/tipo-material/tipo-material.module';
 
 @Module({
   imports: [
@@ -26,6 +28,10 @@ import { UbicacionModule } from './app/ubicacion/ubicacion.module';
     UsuarioModule,
     RolModule,
     MarcaModule,
+    UnidadMedidaModule,
+    UbicacionModule,
+    TipoEnvaseModule,
+    TipoMaterialModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
@@ -44,8 +50,6 @@ import { UbicacionModule } from './app/ubicacion/ubicacion.module';
         synchronize: false,
       }),
     }),
-    UnidadMedidaModule,
-    UbicacionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

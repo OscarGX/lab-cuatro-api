@@ -16,6 +16,8 @@ import { MapperModule } from './common/mapper/mapper.module';
 import { UsuarioModule } from './app/usuario/usuario.module';
 import { RolModule } from './app/rol/rol.module';
 import { MarcaModule } from './app/marca/marca.module';
+import { UnidadMedidaModule } from './app/unidad-medida/unidad-medida.module';
+import { UbicacionModule } from './app/ubicacion/ubicacion.module';
 
 @Module({
   imports: [
@@ -42,6 +44,8 @@ import { MarcaModule } from './app/marca/marca.module';
         synchronize: false,
       }),
     }),
+    UnidadMedidaModule,
+    UbicacionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

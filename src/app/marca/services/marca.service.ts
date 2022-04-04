@@ -37,6 +37,14 @@ export class MarcaService {
     return null;
   }
 
+  public async getAll(): Promise<MarcaReadDTO[]> {
+    const marcas = await this._marcaRepository.find();
+    if (marcas) {
+      return this._mapper.toArrayDTO<MarcaReadDTO>(marcas, MarcaReadDTO);
+    }
+    return null;
+  }
+
   public async getMarcaById(id: string): Promise<MarcaReadDTO> {
     const marca = await this._marcaRepository.findOne(id);
     if (marca) {

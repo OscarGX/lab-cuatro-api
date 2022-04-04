@@ -53,6 +53,21 @@ export class MarcaController {
     }
   }
 
+  @Roles(RolEnum.ADMIN, RolEnum.DOCENTE, RolEnum.LABORATORIO)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Get('')
+  public async getAll() {
+    try {
+      const marcas = await this._marcaService.getAll();
+      return marcas;
+    } catch (error) {
+      throw new HttpException(
+        'Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @ApiResponse({ status: HttpStatus.OK, type: MarcaReadDTO })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponseDTO })
   @Roles(RolEnum.ADMIN, RolEnum.DOCENTE, RolEnum.LABORATORIO)

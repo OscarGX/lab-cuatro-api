@@ -40,6 +40,17 @@ export class UnidadMedidaService {
     return null;
   }
 
+  public async getAll(): Promise<UnidadMedidaReadDTO[]> {
+    const unidades = await this._unidadMedidaRepository.find();
+    if (unidades) {
+      return this._mapper.toArrayDTO<UnidadMedidaReadDTO>(
+        unidades,
+        UnidadMedidaReadDTO,
+      );
+    }
+    return null;
+  }
+
   public async getOneById(id: string): Promise<UnidadMedidaReadDTO> {
     const unidad = await this._unidadMedidaRepository.findOne(id);
     if (unidad) {

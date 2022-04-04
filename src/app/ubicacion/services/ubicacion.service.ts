@@ -40,6 +40,23 @@ export class UbicacionService {
     return null;
   }
 
+  public async getAll(): Promise<UbicacionReadDTO[]> {
+    const ubicaciones = await this._ubicacionRepository
+      .createQueryBuilder('ubicaciones')
+      .leftJoin('ubicaciones.reactivo', 'Reactivo')
+      .leftJoin('ubicaciones.material', 'Material')
+      .where('Reactivo.id IS NULL')
+      .andWhere('Material.id IS NULL')
+      .getMany();
+    if (ubicaciones) {
+      return this._mapper.toArrayDTO<UbicacionReadDTO>(
+        ubicaciones,
+        UbicacionReadDTO,
+      );
+    }
+    return null;
+  }
+
   public async getOneById(id: string): Promise<UbicacionReadDTO> {
     const ubicacion = await this._ubicacionRepository.findOne(id);
     if (ubicacion)

@@ -20,6 +20,8 @@ import { UnidadMedidaModule } from './app/unidad-medida/unidad-medida.module';
 import { UbicacionModule } from './app/ubicacion/ubicacion.module';
 import { TipoEnvaseModule } from './app/tipo-envase/tipo-envase.module';
 import { TipoMaterialModule } from './app/tipo-material/tipo-material.module';
+import { MaterialModule } from './app/material/material.module';
+import { SkuModule } from './app/sku/sku.module';
 
 @Module({
   imports: [
@@ -50,6 +52,8 @@ import { TipoMaterialModule } from './app/tipo-material/tipo-material.module';
         synchronize: false,
       }),
     }),
+    MaterialModule,
+    SkuModule,
   ],
   controllers: [AppController],
   providers: [AppService],

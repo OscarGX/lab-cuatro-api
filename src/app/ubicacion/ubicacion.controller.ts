@@ -65,7 +65,40 @@ export class UbicacionController {
       const ubicaciones = await this._ubicacionService.getAll();
       return ubicaciones;
     } catch (error) {
-      console.log(error);
+      throw new HttpException(
+        'Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Roles(RolEnum.ADMIN, RolEnum.DOCENTE, RolEnum.LABORATORIO)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Get('/material/:id')
+  public async getAllByMaterialId(@Param('id') materialId: string) {
+    try {
+      const ubicaciones = await this._ubicacionService.getAllByMaterialId(
+        materialId,
+      );
+      return ubicaciones;
+    } catch (error) {
+      throw new HttpException(
+        'Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Roles(RolEnum.ADMIN, RolEnum.DOCENTE, RolEnum.LABORATORIO)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Get('/reactivo/:id')
+  public async getAllByReactivoId(@Param('id') reactivoId: string) {
+    try {
+      const ubicaciones = await this._ubicacionService.getAllByReactivoId(
+        reactivoId,
+      );
+      return ubicaciones;
+    } catch (error) {
       throw new HttpException(
         'Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR,

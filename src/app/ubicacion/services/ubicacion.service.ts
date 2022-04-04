@@ -57,6 +57,46 @@ export class UbicacionService {
     return null;
   }
 
+  public async getAllByMaterialId(
+    materialId: string,
+  ): Promise<UbicacionReadDTO[]> {
+    const ubicaciones = await this._ubicacionRepository
+      .createQueryBuilder('ubicaciones')
+      .leftJoin('ubicaciones.reactivo', 'Reactivo')
+      .leftJoin('ubicaciones.material', 'Material')
+      .where('Reactivo.id IS NULL')
+      .andWhere('Material.id = :materialId', { materialId })
+      .orWhere('Material.id IS NULL')
+      .getMany();
+    if (ubicaciones) {
+      return this._mapper.toArrayDTO<UbicacionReadDTO>(
+        ubicaciones,
+        UbicacionReadDTO,
+      );
+    }
+    return null;
+  }
+
+  public async getAllByReactivoId(
+    reactivoId: string,
+  ): Promise<UbicacionReadDTO[]> {
+    const ubicaciones = await this._ubicacionRepository
+      .createQueryBuilder('ubicaciones')
+      .leftJoin('ubicaciones.reactivo', 'Reactivo')
+      .leftJoin('ubicaciones.material', 'Material')
+      .where('Material.id IS NULL')
+      .andWhere('Reactivo.id = :reactivoId', { reactivoId })
+      .orWhere('Reactivo.id IS NULL')
+      .getMany();
+    if (ubicaciones) {
+      return this._mapper.toArrayDTO<UbicacionReadDTO>(
+        ubicaciones,
+        UbicacionReadDTO,
+      );
+    }
+    return null;
+  }
+
   public async getOneById(id: string): Promise<UbicacionReadDTO> {
     const ubicacion = await this._ubicacionRepository.findOne(id);
     if (ubicacion)

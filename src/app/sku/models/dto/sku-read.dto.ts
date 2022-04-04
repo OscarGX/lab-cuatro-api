@@ -9,5 +9,5 @@ export class SkuReadDTO {
   valor: string;
 
   @Expose()
-  descripcion?: string;
+  desripcion?: string;
 }

@@ -1,4 +1,5 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class SkuCreateDTO {
   @IsString()
@@ -6,5 +7,20 @@ export class SkuCreateDTO {
 
   @IsString()
   @IsOptional()
-  descripcion?: string;
+  desripcion?: string;
+}
+
+export class SkuRelationId {
+  @IsString()
+  id: string;
+}
+
+export class FullSkuCreateDTO extends SkuCreateDTO {
+  @ValidateNested()
+  @Type(() => SkuRelationId)
+  reactivo?: SkuRelationId;
+
+  @ValidateNested()
+  @Type(() => SkuRelationId)
+  material?: SkuRelationId;
 }

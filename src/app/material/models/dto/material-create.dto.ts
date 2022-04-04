@@ -25,7 +25,7 @@ export class MaterialCreateDTO {
 
   @IsString()
   @IsOptional()
-  descripcion?: string;
+  desripcion?: string;
 
   @IsString()
   capacidadTamanio: string;

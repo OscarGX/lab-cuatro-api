@@ -1,12 +1,14 @@
-import { Exclude, Expose, Type } from 'class-transformer';
+import { Exclude, Type, Expose } from 'class-transformer';
 import { MarcaReadDTO } from 'src/app/marca/models/dto';
 import { SkuReadDTO } from 'src/app/sku/models/dto';
-import { TipoMaterialReadDTO } from 'src/app/tipo-material/models/dto';
+import { TipoEnvaseReadDTO } from 'src/app/tipo-envase/models/dto';
 import { UbicacionReadDTO } from 'src/app/ubicacion/models/dto';
 import { UnidadMedidaReadDTO } from 'src/app/unidad-medida/models/dto';
+import { ClasificacionEnum } from 'src/data/enums/clasificacion.enum';
+import { EstadoFisicoEnum } from 'src/data/enums/estado-fisico.enum';
 
 @Exclude()
-export class MaterialReadDTO {
+export class ReactivoReadDTO {
   @Expose()
   id: string;
 
@@ -17,16 +19,22 @@ export class MaterialReadDTO {
   desripcion?: string;
 
   @Expose()
-  capacidadTamanio: string;
+  stock: number;
 
   @Expose()
   cantidad: number;
 
   @Expose()
-  clasificacion: string;
+  estadoFisico: EstadoFisicoEnum;
+
+  @Expose()
+  clasificacion: ClasificacionEnum;
 
   @Expose()
   fechaIngreso: string;
+
+  @Expose()
+  hojaSeguridad: boolean;
 
   @Expose()
   status: number;
@@ -40,8 +48,8 @@ export class MaterialReadDTO {
   marca?: MarcaReadDTO;
 
   @Expose()
-  @Type(() => TipoMaterialReadDTO)
-  tipoMaterial?: TipoMaterialReadDTO;
+  @Type(() => TipoEnvaseReadDTO)
+  tipoEnvase?: TipoEnvaseReadDTO;
 
   @Expose()
   @Type(() => UbicacionReadDTO)

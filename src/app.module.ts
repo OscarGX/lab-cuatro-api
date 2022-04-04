@@ -22,6 +22,7 @@ import { TipoEnvaseModule } from './app/tipo-envase/tipo-envase.module';
 import { TipoMaterialModule } from './app/tipo-material/tipo-material.module';
 import { MaterialModule } from './app/material/material.module';
 import { SkuModule } from './app/sku/sku.module';
+import { ReactivoModule } from './app/reactivo/reactivo.module';
 
 @Module({
   imports: [
@@ -34,6 +35,9 @@ import { SkuModule } from './app/sku/sku.module';
     UbicacionModule,
     TipoEnvaseModule,
     TipoMaterialModule,
+    MaterialModule,
+    SkuModule,
+    ReactivoModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
@@ -52,8 +56,6 @@ import { SkuModule } from './app/sku/sku.module';
         synchronize: false,
       }),
     }),
-    MaterialModule,
-    SkuModule,
   ],
   controllers: [AppController],
   providers: [AppService],

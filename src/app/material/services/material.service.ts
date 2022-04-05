@@ -40,6 +40,25 @@ export class MaterialService {
     return null;
   }
 
+  public async getAllByCantidad(cantidad = 5): Promise<MaterialReadDTO[]> {
+    const materiales = await this._materialRepository
+      .createQueryBuilder('materiales')
+      .innerJoinAndSelect('materiales.unidadMedida', 'unidades-medidas')
+      .innerJoinAndSelect('materiales.marca', 'marcas')
+      .innerJoinAndSelect('materiales.tipoMaterial', 'tipos-materiales')
+      .innerJoinAndSelect('materiales.ubicacion', 'ubicaciones')
+      .where('materiales.cantidad <= :cantidad', { cantidad })
+      .orderBy('materiales.cantidad', 'ASC')
+      .getMany();
+    if (materiales) {
+      return this._mapper.toArrayDTO<MaterialReadDTO>(
+        materiales,
+        MaterialReadDTO,
+      );
+    }
+    return null;
+  }
+
   public async getOneById(id: string): Promise<MaterialReadDTO> {
     const material = await this._materialRepository.findOne(id, {
       relations: ['skus'],

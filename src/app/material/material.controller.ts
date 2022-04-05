@@ -57,6 +57,23 @@ export class MaterialController {
     }
   }
 
+  @Roles(RolEnum.ADMIN, RolEnum.DOCENTE, RolEnum.LABORATORIO)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Get('/dashboard/:cantidad')
+  public async getAllByCantidad(
+    @Param('cantidad', ParseIntPipe) cantidad: number,
+  ) {
+    try {
+      const materiales = await this._materialService.getAllByCantidad(cantidad);
+      return materiales;
+    } catch (error) {
+      throw new HttpException(
+        'Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @ApiResponse({ status: HttpStatus.OK, type: MaterialReadDTO })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponseDTO })
   @Roles(RolEnum.ADMIN, RolEnum.DOCENTE, RolEnum.LABORATORIO)

@@ -41,6 +41,29 @@ export class ReactivoService {
     return null;
   }
 
+  public async getAllByStockAndCantidad(
+    stock = 5,
+    cantidad = 5,
+  ): Promise<ReactivoReadDTO[]> {
+    const reactivos = await this._reactivoRepository
+      .createQueryBuilder('reactivos')
+      .innerJoinAndSelect('reactivos.unidadMedida', 'unidades-medidas')
+      .innerJoinAndSelect('reactivos.marca', 'marcas')
+      .innerJoinAndSelect('reactivos.tipoEnvase', 'tipos-envases')
+      .innerJoinAndSelect('reactivos.ubicacion', 'ubicaciones')
+      .where('reactivos.stock <= :stock', { stock })
+      .orWhere('reactivos.cantidad <= :cantidad', { cantidad })
+      .orderBy('reactivos.stock', 'ASC')
+      .getMany();
+    if (reactivos) {
+      return this._mapper.toArrayDTO<ReactivoReadDTO>(
+        reactivos,
+        ReactivoReadDTO,
+      );
+    }
+    return null;
+  }
+
   public async getOneById(id: string): Promise<ReactivoReadDTO> {
     const reactivo = await this._reactivoRepository.findOne(id, {
       relations: ['skus'],

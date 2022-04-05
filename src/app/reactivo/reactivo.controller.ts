@@ -57,6 +57,27 @@ export class ReactivoController {
     }
   }
 
+  @Roles(RolEnum.ADMIN, RolEnum.DOCENTE, RolEnum.LABORATORIO)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Get('/dashboard/:stock/:cantidad')
+  public async getAllByStockAndCantidad(
+    @Param('stock', ParseIntPipe) stock: number,
+    @Param('cantidad', ParseIntPipe) cantidad: number,
+  ) {
+    try {
+      const reactivos = await this._reactivoService.getAllByStockAndCantidad(
+        stock,
+        cantidad,
+      );
+      return reactivos;
+    } catch (error) {
+      throw new HttpException(
+        'Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @ApiResponse({ status: HttpStatus.OK, type: ReactivoReadDTO })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponseDTO })
   @Roles(RolEnum.ADMIN, RolEnum.DOCENTE, RolEnum.LABORATORIO)
